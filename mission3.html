@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <title>Mission 3 : Requêtes SQL</title>
+</head>
+<body>
+
+    <header class="top-nav">
+        <nav>
+            <a href="index.html" class="logo">SAE KDou</a>
+            <div class="menu-links">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="mission1.html">Mission 1</a></li>
+                    <li><a href="mission2.html">Mission 2</a></li>
+                    <li><a href="mission3.html" class="active">Mission 3</a></li>
+                    <li><a href="conclusions.html">Conclusions</a></li>
+                    <li><a href="a-propos.html">À propos</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="contenu-principal">
+        
+        <header class="page-header">
+            <h1>Mission 3 : Analyse avancée en SQL</h1>
+        </header>
+
+        <section>
+            <h2>Contexte de la mission</h2>
+            <p>La mission 3 nous demande d'exploiter une version mise à jour de la base de données KDou. Cette version introduit :</p>
+            <ul>
+                <li>Une table `Pays` dédiée pour mieux gérer la provenance des fournisseurs.</li>
+                <li>Un champ `CoefMarge` dans la table `Categorie` pour un calcul du prix de vente (`PrixVente = CoutAchat * CoefMarge`).</li>
+                <li>Une auto-liaison sur la table `Clientele` (`CodeCliPart`) pour gérer les réseaux de clients partenaires.</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Indicateurs proposés par l'équipe</h2>
+            <p>Chaque membre de l'équipe a proposé un indicateur pertinent pour la problématique de KDou.</p>
+
+            <article class="indicateur">
+                <h3>1. Lister les produits dont le stock est inférieur à 10 unités</h3>
+                <section>
+                    <h4>Objectif et Construction (Interêt)</h4>
+                    <p>Cette requête est pertinente car elle aide KDou à éviter les ruptures de stock et à garantir la disponibilité des produits pour ses clients. En identifiant rapidement les produits en quantité critique, l’entreprise peut anticiper les réapprovisionnements, limiter les pertes de ventes etc.</p>
+                </section>
+                <section>
+                    <h4>Requête SQL</h4>
+                    <pre>
+SELECT [NomProd], [UnitStock]
+FROM Produit
+WHERE [UnitStock] < 10
+ORDER BY [UnitStock];
+                    </pre>
+                </section>
+                <section>
+                    <h4>Résultat</h4>
+                    <img src = "images/interprétation1.png"
+                height="500" width="500">
+                </section>
+            </article>
+
+            <article class="indicateur">
+                <h3>2. Afficher le chiffre d’affaires généré par chaque catégorie de produits</h3>
+                <section>
+                    <h4>Objectif et Construction (Interêt)</h4>
+                    <p>Cette requête permet à KDou d’évaluer quelles catégories de produits génèrent le plus de chiffre d’affaires. Elle est essentielle pour ajuster l’offre commerciale, concentrer les efforts marketing sur les produits les plus rentables et optimiser en fonction des préférences de la clientèle.</p>
+                </section>
+                <section>
+                    <h4>Requête SQL</h4>
+                    <pre>
+SELECT [Categorie].[NomCateg], Sum([DetailCommande].[Quantité][Produit].[CoutAchat](1 - Nz([Remise (%)],0)/100)) AS ChiffreAffaire
+FROM (Categorie INNER JOIN Produit ON [Categorie].[CodeCateg] = [Produit].[CodeCateg]) INNER JOIN DetailCommande ON [Produit].[RefProd] = [DetailCommande].[Réf produit]
+GROUP BY [Categorie].[NomCateg]
+ORDER BY [ChiffreAffaire] DESC;
+                    </pre>
+                </section>
+                <section>
+                    <h4>Résultat</h4>
+                    <img src = "images/interprétation2.png"
+                height="500" width="500">
+                </section>
+            </article>
+
+            <article class="indicateur">
+                <h3>3. Lister le nombre de produits provenant de fournisseurs hors Union Européenne</h3>
+                <section>
+                    <h4>Objectif et Construction (Interêt)</h4>
+                    <p>Cette requête mesure la part des produits provenant de pays extérieurs à l’Union Européenne. Elle est cruciale pour le respect des engagements environnementaux de KDou, car elle permet de suivre la dépendance aux fournisseurs éloignés et d’orienter la stratégie vers des circuits d’approvisionnement plus courts et plus écologiques.</p>
+                </section>
+                <section>
+                    <h4>Requête SQL</h4>
+                    <pre>
+SELECT [Pays].[UE], Count([Produit].[RefProd]) AS NbProduits
+FROM (Pays INNER JOIN Fournisseur ON [Pays].[NoPays] = [Fournisseur].[NoPays]) INNER JOIN Produit ON [Fournisseur].[NoFour] = [Produit].[NoFour]
+GROUP BY [Pays].[UE]
+ORDER BY 1;SELECT [Pays].[UE], Count([Produit].[RefProd]) AS NbProduits
+FROM (Pays INNER JOIN Fournisseur ON [Pays].[NoPays] = [Fournisseur].[NoPays]) INNER JOIN Produit ON [Fournisseur].[NoFour] = [Produit].[NoFour]
+GROUP BY [Pays].[UE]
+ORDER BY 1;
+                    </pre>
+                </section>
+                <section>
+                    <h4>Résultat</h4>
+                    <img src = "images/interprétation3.png"
+                height="500" width="500">
+                </section>
+            </article>
+
+            <article class="indicateur">
+                <h3>4. Identifier les 5 clients ayant passé le plus de commandes</h3>
+                <section>
+                    <h4>Objectif et Construction (Interêt)</h4>
+                    <p>Identifier les clients les plus fidèles permet à KDou d’entretenir des relations privilégiées avec eux. Cette requête aide à mieux comprendre la base client, à cibler les partenaires stratégiques et à développer des offres personnalisées, renforçant ainsi la satisfaction et la fidélisation de la clientèle la plus active.</p>
+                </section>
+                <section>
+                    <h4>Requête SQL</h4>
+                    <pre>
+SELECT TOP 5 [Clientele].[Societe], Count([Commande].[N° commande]) AS NbCommandes
+FROM Clientele INNER JOIN Commande ON [Clientele].[CodeCli] = [Commande].[CodeCli]
+GROUP BY [Clientele].[Societe]
+ORDER BY Count([Commande].[N° commande]) DESC;
+                    </pre>
+                </section>
+                <section>
+                    <h4>Résultat</h4>
+                    <img src = "images/interprétation4.png"
+                height="500" width="500">
+                </section>
+            </article>
+
+            <article class="indicateur">
+                <h3>5. Lister les produits qui n’ont jamais été commandés</h3>
+                <section>
+                    <h4>Objectif et Construction (Interêt)</h4>
+                    <p>Cette requête met en évidence les produits qui ne rencontrent aucun succès commercial. Elle est utile pour optimiser le catalogue de KDou, éviter les coûts liés au stockage inutile et recentrer les efforts sur les produits à forte demande, favorisant ainsi une gestion plus responsable et durable des ressources.</p>
+                </section>
+                <section>
+                    <h4>Requête SQL</h4>
+                    <pre>
+SELECT [NomProd]
+FROM Produit
+WHERE [RefProd] NOT IN (SELECT [Réf produit] FROM [DetailCommande]);
+                    </pre>
+                </section>
+                <section>
+                    <h4>Résultat</h4>
+                    <img src = "images/interprétation5.png"
+                height="500" width="500">
+                </section>
+            </article>
+        </section>
+        
+        <footer class="page-footer">
+            <p>SAÉ 1.04 & R1.02</p>
+        </footer>
+
+    </main>
+
+</body>
+</html>

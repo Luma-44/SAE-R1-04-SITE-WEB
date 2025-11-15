@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+    <header class="top-nav">
+        <nav>
+            <a href="index.html" class="logo">SAE KDou</a>
+            <div class="menu-links">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="mission1.html">Mission 1</a></li>
+                    <li><a href="mission2.html">Mission 2</a></li>
+                    <li><a href="mission3.html">Mission 3</a></li>
+                    <li><a href="conclusions.html">Conclusions</a></li>
+                    <li><a href="a-propos.html" class="active">À propos</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="contenu-principal">
+        
+        <header class="page-header">
+            <h1>À propos de ce rapport web</h1>
+        </header>
+
+        <section>
+            <h2>Choix Techniques et Sémantiques</h2>
+            
+            <h3>Architecture des fichiers</h3>
+            <p>Nous avons opté pour une structure simple avec un fichier HTML par "chapitre" du rapport, et un dossier CSS assets contenant une feuille de style style.css.</p>
+
+            <h3>La Sémantique</h3>
+            <p>Nous avons utilisé les balises sémantiques vues en cours (comme header, nav, main, section, article, footer) pour structurer le contenu et lui donner du sens. Les titres h1, h2, h3 sont utilisés pour la hiérarchie visuelle.</p>
+
+            <h3>Mise en page CSS et Flexbox</h3>
+            <p>La mise en page repose sur des Flexbox. La barre de navigation "header.top-nav" utilise "display: flex" pour aligner le logo et les liens. Elle est en `position: fixed` pour qu'elle reste affichée même lorsque la page estr défilée.</p>
+            
+            <h3>Les éléments techniques utilisés</h3>
+            <p>Nous avons utilisé :</p>
+            <ul>
+                <li>Des <strong>listes</strong> (dans le menu et les rapports).</li>
+                <li>Des <strong>tableaux</strong> (pour le bilan de la Mission 1).</li>
+                <li>Des <strong>images</strong> (pour les résultats des requêtes).</li>
+                <li>Des <strong>media queries</strong> simples pour assurer une lisibilité même sur télépphone.</li>
+                <li>Des <strong>textes alternatifs</strong> sur les images pour l'accessibilité.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Tests et Validation</h2>
+            <p>Le site a été testé sur Firefox et Chrome. Le code a été vérifié à l'aide du validateur https://validator.w3.org pour assurer sa conformité.</p>
+        </section>
+        
+        <footer class="page-footer">
+            <p>SAÉ 1.04 & R1.02</p>
+        </footer>
+
+    </main>
+</body>
+</html>

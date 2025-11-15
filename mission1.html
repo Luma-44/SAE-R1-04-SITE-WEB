@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+    <header class="top-nav">
+        <nav>
+            <a href="index.html" class="logo">SAE KDou</a>
+            <div class="menu-links">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="mission1.html" class="active">Mission 1</a></li>
+                    <li><a href="mission2.html">Mission 2</a></li>
+                    <li><a href="mission3.html">Mission 3</a></li>
+                    <li><a href="conclusions.html">Conclusions</a></li>
+                    <li><a href="a-propos.html">À propos</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="contenu-principal">
+        
+        <header class="page-header">
+            <h1>Mission 1 : Étude de la base de données</h1>
+        </header>
+
+        <section>
+            <h2>Contexte de la mission</h2>
+            <p>La première mission consistait à prendre en main le jeu de données fourni sous Excel pour comprendre la structure de la base, identifier les clés primaires / étrangères (candidates aussi) et repérer les éventuelles incohérences.</p>
+        </section>
+
+        <section>
+            <h2>Bilan sur l'étude des données</h2>
+            <p>Voici une synthèse de notre analyse des tables de la base KDou (questions 1a, 1b, 1c du sujet) :</p>
+            
+            <table>
+                <caption>Analyse des tables principales</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Table</th>
+                        <th scope="col">Clé Primaire</th>
+                        <th scope="col">Clés Étrangères</th>
+                        <th scope="col">Utilité</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fournisseur</td>
+                        <td>CodeFrs</td>
+                        <td>(aucune)</td>
+                        <td>Stocke les informations sur les fournisseurs.</td>
+                    </tr>
+                    <tr>
+                        <td>Produit</td>
+                        <td>RefProd</td>
+                        <td>CodeFrs, CodeCat</td>
+                        <td>Catalogue des produits vendus.</td>
+                    </tr>
+                    <tr>
+                        <td>Commande</td>
+                        <td>NoCde</td>
+                        <td>CodeCli</td>
+                        <td>Enregistre les commandes des clients.</td>
+                    </tr>
+                    <tr>
+                        <td>DetailCommande</td>
+                        <td>(NoCde, RefProd)</td>
+                        <td>NoCde, RefProd</td>
+                        <td>Table de jointure (panier) liant produits et commandes.</td>
+                    </tr>
+                    </tbody>
+            </table>
+        </section>
+        
+        <section>
+            <h2>Perspective d'amélioration</h2>
+            <p>Suite à l'analyse (question 4 du sujet), nous avons identifié plusieurs problèmes et pistes d'amélioration :</p>
+            <ul>
+                <li><strong>Incorérences / probèmes de données :</strong> Dans la question 2C un client qui habite à Paris n’as pas le bon code postal (76001). De plus dans la table des fournisseurs la colonne des pays, certains pays sont soit mal écris soit dans une autre langue. Il y a aussi dans la question 2I) le nom et le code client (MALEF) de Marie Lefevre a été inversé. De plus il manque aussi des informations dans certaines table comme la société “Clo d'Amaya” qui ne possède pas d’adresse ou alors dans la table “fournisseur” beaucoup de case sont vide dans la colonne régions. Enfin, dans la colonne « code client », un élément apparaît sous la forme “FOLK0”avec un zéro à la place du O, alors que l’entrée correcte “FOLKO” existe bien dans la table clientèle</li>
+                <li><strong>Perspéctives d'amélioration :</strong> Dans un premier temps, nous pourrions faire en sorte que la colonne code client ne puisse contenir qu’une chaine de caractère et non des chiffres (pour éviter FOLK0 par exemple). Ensuite si c’est possible il faudrait que le code postal d’une même ville contienne toujours les mêmes 2 premiers chiffres. Cela réduirait les chances d’avoir un code postal faux (76001 et Paris) . Dans la colonne coût d'achat la monnaie devrait être indiqué car la valeur de différentes monnaies n’est pas toujours égale. Il aurait aussi été mieux que cette base de données soit faite sur Microsoft Access, cela nous aurait permis de croiser les informations des différentes tables (utile par exemple pour la question 2m) ou il faut comparer les codes clients des tables “clientèle” et “commande”. Pour finir il aurait fallu regrouper tous les pays en 1 seule langue et 1 seule orthographe pour éviter les confusions. 
+ </li>
+                <li><strong>Conclusion</strong> En conclusion, la base de Kdou possède un structure simple des donnée, un peu minimaliste et présente aussi quelques incohérences</li>
+            </ul>
+        </section>
+
+        <footer class="page-footer">
+            <p>SAÉ 1.04 & R1.02</p>
+        </footer>
+
+    </main>
+</body>
+</html>

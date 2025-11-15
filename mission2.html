@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+    <header class="top-nav">
+        <nav>
+            <a href="index.html" class="logo">SAE KDou</a>
+            <div class="menu-links">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="mission1.html">Mission 1</a></li>
+                    <li><a href="mission2.html" class="active">Mission 2</a></li>
+                    <li><a href="mission3.html">Mission 3</a></li>
+                    <li><a href="conclusions.html">Conclusions</a></li>
+                    <li><a href="a-propos.html">À propos</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="contenu-principal">
+        
+        <header class="page-header">
+            <h1>Mission 2 : Exploitation avec Access</h1>
+        </header>
+
+        <section>
+            <h2>Contexte de la mission</h2>
+            <p>L'objectif de la mission 2 était d'utiliser le logiciel Access pour interroger la base KDou (au choix avec SQL ou QBE)</p>
+            <p>Nous devons présenter au moins un indicateur intéressant.</p>
+        </section>
+
+        <article class="indicateur">
+            <h3>Indicateur 1 : Produits US à moins de 25€</h3>
+            
+            <section>
+                <h4>Énoncé et interprétation</h4>
+                <p>La demande (question c) est : "Quels sont les produits de provenance des Etats-Unis ayant un cout de moins de 25€ ? On veut les connaître noms et prix, nom du fournisseur et ville.".</p>
+                <p>Nous avons interprété "coût" comme le prix d'achat (`PrixAchat` dans la table `Produit`) et "provenance" comme le `Pays` du `Fournisseur`.</p>
+            </section>
+            
+            <section>
+                <h4>Requête SQL correspondante</h4>
+                <p>Voici le code SQL que nous avons utilisé pour cette question</p>
+                <pre>
+SELECT
+    Produit.NomProd,
+    Produit.CoutAchat,
+    Fournisseur.Societe,
+    Fournisseur.Ville
+FROM
+    Fournisseur
+    INNER JOIN Produit ON Fournisseur.NoFour = Produit.NoFour
+WHERE
+    Fournisseur.Pays = "Etats-Unis"
+    AND Produit.CoutAchat <= 25;
+                </pre>
+            </section>
+
+            <section>
+                <h4>Résultat</h4>
+                <p>Voici une capture d'écran du résultat obtenu dans Access :</p>
+                <img src = "images/Q2M2.png"
+                height="500" width="500">
+                </section>
+        </article>
+
+        <footer class="page-footer">
+            <p>SAÉ 1.04 & R1.02</p>
+        </footer>
+
+    </main>
+</body>
+</html>
